@@ -8,7 +8,6 @@
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:sharedUserId="android.uid.system"
     package="com.kynetics.uf.android">
 
     <uses-sdk tools:overrideLibrary="androidx.security"/>
