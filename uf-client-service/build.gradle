@@ -21,6 +21,7 @@ android {
         versionCode 29
         versionName versionFromGit(project)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     sourceSets {
@@ -125,4 +126,5 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.1.1'
     implementation 'androidx.security:security-crypto:1.0.0'
     androidTestImplementation("androidx.test.ext:junit:1.1.1")
+    implementation 'androidx.multidex:multidex:2.0.1'
 }

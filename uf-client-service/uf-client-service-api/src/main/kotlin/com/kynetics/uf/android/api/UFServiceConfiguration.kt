@@ -13,7 +13,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.json.JsonException
 
 @Serializable
 /**
@@ -56,7 +55,7 @@ data class UFServiceConfiguration(
      * Json serialization
      */
     fun toJson(): String {
-        return json.stringify(serializer(), this)
+        return json.encodeToString(serializer(), this)
     }
 
     /**
@@ -234,7 +233,7 @@ data class UFServiceConfiguration(
     }
 
     companion object {
-        private val json = Json(JsonConfiguration.Stable.copy(strictMode = false))
+        private val json = Json
         private const val serialVersionUID = -6025361892414738765L
 
         /**
@@ -252,7 +251,7 @@ data class UFServiceConfiguration(
          */
         @JvmStatic
         fun fromJson(data: String): UFServiceConfiguration {
-            return json.parse(serializer(), data)
+            return json.decodeFromString(serializer(), data)
         }
     }
 
