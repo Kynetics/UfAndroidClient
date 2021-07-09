@@ -10,7 +10,7 @@
 package com.kynetics.uf.android.update
 
 import android.content.Context
-import com.kynetics.updatefactory.ddiclient.core.api.Updater
+import org.eclipse.hara.ddiclient.core.api.Updater
 
 abstract class AndroidUpdater(protected val context: Context) : Updater {
     protected val currentUpdateState: CurrentUpdateState = CurrentUpdateState(context)

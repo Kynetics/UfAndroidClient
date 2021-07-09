@@ -24,8 +24,9 @@ import com.kynetics.uf.android.update.CurrentUpdateState
 import com.kynetics.uf.android.update.SystemUpdateType
 import com.kynetics.uf.android.update.application.ApkUpdater
 import com.kynetics.uf.android.update.system.OtaUpdater
-import com.kynetics.updatefactory.ddiclient.core.UpdateFactoryClientDefaultImpl
-import com.kynetics.updatefactory.ddiclient.core.api.*
+import com.kynetics.uf.ddiclient.HaraClientFactory
+import com.kynetics.uf.ddiclient.TargetTokenFoundListener
+import org.eclipse.hara.ddiclient.core.api.*
 import java.io.File
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
@@ -101,7 +102,6 @@ data class ConfigurationHandler(
                     .withRetryDelay(getLong(sharedPreferencesRetryDelayKey, 900000))
                     .withTargetToken(getTargetToken())
                     .withTenant(getString(sharedPreferencesTenantKey, ""))
-                    .withIsUpdateFactoryServer(getServerType() == UpdateFactoryClientData.ServerType.UPDATE_FACTORY)
                     .withUrl(getString(sharedPreferencesServerUrlKey, ""))
                     .build()
         }
@@ -126,11 +126,11 @@ data class ConfigurationHandler(
     fun apiModeIsEnabled() = sharedPreferences.getBoolean(sharedPreferencesApiModeKey, false)
 
     fun buildServiceFromPreferences(
-        deploymentPermitProvider: DeploymentPermitProvider,
-        listeners: List<MessageListener>
-    ): UpdateFactoryClient? {
+            deploymentPermitProvider: DeploymentPermitProvider,
+            listeners: List<MessageListener>
+    ): HaraClient? {
         val serviceConfiguration = getCurrentConfiguration()
-        var newService:UpdateFactoryClient? = null
+        var newService: HaraClient? = null
         if (serviceConfiguration.isEnable()) {
             try {
                 newService = serviceConfiguration.toService(deploymentPermitProvider, listeners)
@@ -169,27 +169,14 @@ data class ConfigurationHandler(
         }
     }
 
-    private fun getServerType(): UpdateFactoryClientData.ServerType {
-        return if (sharedPreferences.getBoolean(sharedPreferencesIsUpdateFactoryServerType, true)) {
-            UpdateFactoryClientData.ServerType.UPDATE_FACTORY
-        } else {
-            UpdateFactoryClientData.ServerType.HAWKBIT
-        }
-    }
-
-    private fun getTargetTokenListener():TargetTokenFoundListener? {
-        return if (sharedPreferences.getBoolean(sharedPreferencesIsUpdateFactoryServerType, true)) {
-            object : TargetTokenFoundListener {
-                override fun onFound(targetToken: String): () -> Unit {
-                    Log.d(TAG, "New target token received")
-                    sharedPreferences.edit()
-                            .putString(sharedPreferencesTargetTokenReceivedFromServer, targetToken)
-                            .apply()
-                    return {}
-                }
+    private fun getTargetTokenListener(): TargetTokenFoundListener {
+        return object : TargetTokenFoundListener {
+            override fun onFound(targetToken: String){
+                Log.d(TAG, "New target token received")
+                sharedPreferences.edit()
+                        .putString(sharedPreferencesTargetTokenReceivedFromServer, targetToken)
+                        .apply()
             }
-        } else {
-            null
         }
     }
 
@@ -232,31 +219,40 @@ data class ConfigurationHandler(
     private fun UFServiceConfiguration.toService(
         deploymentPermitProvider: DeploymentPermitProvider,
         listeners: List<MessageListener>
-    ): UpdateFactoryClient {
-        val newUfService = UpdateFactoryClientDefaultImpl()
-        newUfService.init(
-                toClientData(),
-                object : DirectoryForArtifactsProvider {
-                    override fun directoryForArtifacts(): File = currentUpdateState.rootDir()
-                },
-                buildConfigDataProvider(),
-                deploymentPermitProvider,
-                listeners,
-            OtaUpdater(context),
-            ApkUpdater(context)
-        )
-        return newUfService
+    ): HaraClient {
+        return if(isUpdateFactoryServe){
+            HaraClientFactory.newUFClient(
+                    toClientData(),
+                    object : DirectoryForArtifactsProvider {
+                        override fun directoryForArtifacts(): File = currentUpdateState.rootDir()
+                    },
+                    buildConfigDataProvider(),
+                    deploymentPermitProvider,
+                    listeners,
+                    listOf(OtaUpdater(context),ApkUpdater(context)),
+                    getTargetTokenListener()
+            )
+        } else {
+            HaraClientFactory.newHawkbitClient(
+                    toClientData(),
+                    object : DirectoryForArtifactsProvider {
+                        override fun directoryForArtifacts(): File = currentUpdateState.rootDir()
+                    },
+                    buildConfigDataProvider(),
+                    deploymentPermitProvider,
+                    listeners,
+                    listOf(OtaUpdater(context),ApkUpdater(context))
+            )
+        }
     }
 
-    private fun UFServiceConfiguration.toClientData(): UpdateFactoryClientData {
-        return UpdateFactoryClientData(
+    private fun UFServiceConfiguration.toClientData(): HaraClientData {
+        return HaraClientData(
                 tenant,
                 controllerId,
                 url,
-                getServerType(),
                 gatewayToken,
-                targetToken,
-                getTargetTokenListener()
+                targetToken
         )
     }
 

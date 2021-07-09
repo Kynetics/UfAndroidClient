@@ -101,9 +101,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation("com.github.kynetics:uf-ddiclient:v1.0.1"){
-        exclude group: "org.slf4j", module: "slf4j-simple"
-    }
+    implementation project(":uf-ddiclient")
     implementation 'de.psdev.slf4j-android-logger:slf4j-android-logger:1.0.5'
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "com.google.android.material:material:1.0.0"

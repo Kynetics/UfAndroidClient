@@ -16,7 +16,7 @@ import com.kynetics.uf.android.update.AndroidUpdater
 import com.kynetics.uf.android.update.CurrentUpdateState
 import com.kynetics.uf.android.update.application.ApkAnalyzer.getPackageFromApk
 import com.kynetics.uf.android.update.application.ApkAnalyzer.getVersionFromApk
-import com.kynetics.updatefactory.ddiclient.core.api.Updater
+import org.eclipse.hara.ddiclient.core.api.Updater
 
 class ApkUpdater(context: Context) : AndroidUpdater(context) {
 

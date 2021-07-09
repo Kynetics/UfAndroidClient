@@ -16,7 +16,7 @@ import com.kynetics.uf.android.api.Communication
 import com.kynetics.uf.android.communication.MessengerHandler
 import com.kynetics.uf.android.ui.MainActivity
 import com.kynetics.uf.android.update.CurrentUpdateState
-import com.kynetics.updatefactory.ddiclient.core.api.DeploymentPermitProvider
+import org.eclipse.hara.ddiclient.core.api.DeploymentPermitProvider
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi

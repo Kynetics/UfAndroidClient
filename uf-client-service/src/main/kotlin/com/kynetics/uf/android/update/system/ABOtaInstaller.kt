@@ -21,7 +21,7 @@ import com.kynetics.uf.android.api.v1.UFServiceMessageV1
 import com.kynetics.uf.android.communication.MessengerHandler
 import com.kynetics.uf.android.update.CurrentUpdateState
 import com.kynetics.uf.android.util.zip.getEntryOffset
-import com.kynetics.updatefactory.ddiclient.core.api.Updater
+import org.eclipse.hara.ddiclient.core.api.Updater
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.CountDownLatch

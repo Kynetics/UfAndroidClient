@@ -17,7 +17,7 @@ import com.kynetics.uf.android.api.Communication
 import com.kynetics.uf.android.communication.MessageHandler
 import com.kynetics.uf.android.communication.MessengerHandler
 import com.kynetics.uf.android.update.CurrentUpdateState
-import com.kynetics.updatefactory.ddiclient.core.api.MessageListener
+import org.eclipse.hara.ddiclient.core.api.MessageListener
 
 class AndroidMessageListener(private val service: UpdateFactoryService) : MessageListener {
 

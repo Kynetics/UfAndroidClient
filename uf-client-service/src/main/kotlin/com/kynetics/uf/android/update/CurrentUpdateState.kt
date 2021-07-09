@@ -15,7 +15,7 @@ import android.content.SharedPreferences
 import android.os.Environment
 import android.os.SystemProperties
 import android.util.Log
-import com.kynetics.updatefactory.ddiclient.core.api.Updater
+import org.eclipse.hara.ddiclient.core.api.Updater
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.HashSet

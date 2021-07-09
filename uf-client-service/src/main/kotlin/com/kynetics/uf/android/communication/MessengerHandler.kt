@@ -17,7 +17,7 @@ import android.util.Log
 import com.kynetics.uf.android.api.ApiCommunicationVersion
 import com.kynetics.uf.android.api.Communication
 import com.kynetics.uf.android.api.v1.UFServiceMessageV1
-import com.kynetics.updatefactory.ddiclient.core.api.MessageListener
+import org.eclipse.hara.ddiclient.core.api.MessageListener
 import java.io.Serializable
 
 object MessengerHandler {

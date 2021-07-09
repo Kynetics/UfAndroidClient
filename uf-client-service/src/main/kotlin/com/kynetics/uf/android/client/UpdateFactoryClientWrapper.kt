@@ -9,15 +9,16 @@
 
 package com.kynetics.uf.android.client
 
-import com.kynetics.updatefactory.ddiclient.core.api.*
+import okhttp3.OkHttpClient
+import org.eclipse.hara.ddiclient.core.api.*
 
-class UpdateFactoryClientWrapper(var delegate: UpdateFactoryClient? = null): UpdateFactoryClient {
+class UpdateFactoryClientWrapper(var delegate: HaraClient? = null): HaraClient {
     override fun forcePing() {
         delegate?.forcePing()
     }
 
-    override fun init(updateFactoryClientData: UpdateFactoryClientData, directoryForArtifactsProvider: DirectoryForArtifactsProvider, configDataProvider: ConfigDataProvider, deploymentPermitProvider: DeploymentPermitProvider, messageListeners: List<MessageListener>, vararg updaters: Updater) {
-        delegate?.init(updateFactoryClientData, directoryForArtifactsProvider, configDataProvider, deploymentPermitProvider, messageListeners, *updaters)
+    override fun init(updateFactoryClientData: HaraClientData, directoryForArtifactsProvider: DirectoryForArtifactsProvider, configDataProvider: ConfigDataProvider, deploymentPermitProvider: DeploymentPermitProvider, messageListeners: List<MessageListener>, updaters: List<Updater>, httpBuilder: OkHttpClient.Builder) {
+        delegate?.init(updateFactoryClientData, directoryForArtifactsProvider, configDataProvider, deploymentPermitProvider, messageListeners, updaters.toList())
     }
 
     override fun startAsync() {

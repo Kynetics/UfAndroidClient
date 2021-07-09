@@ -17,9 +17,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.*
-import androidx.core.app.NotificationCompat
+import android.os.Handler
+import android.os.IBinder
+import android.os.Message
+import android.os.Messenger
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import com.kynetics.uf.android.api.ApiCommunicationVersion
 import com.kynetics.uf.android.api.Communication
 import com.kynetics.uf.android.api.Communication.Companion.SERVICE_API_VERSION_KEY
@@ -32,15 +35,13 @@ import com.kynetics.uf.android.communication.MessengerHandler
 import com.kynetics.uf.android.configuration.AndroidDeploymentPermitProvider
 import com.kynetics.uf.android.configuration.AndroidMessageListener
 import com.kynetics.uf.android.configuration.ConfigurationHandler
-import com.kynetics.uf.android.content.EncryptedSharedPreferences
-import com.kynetics.uf.android.content.SharedPreferencesWithObject
 import com.kynetics.uf.android.content.UFSharedPreferences
 import com.kynetics.uf.android.ui.MainActivity
 import com.kynetics.uf.android.update.CurrentUpdateState
 import com.kynetics.uf.android.update.SystemUpdateType
-import com.kynetics.updatefactory.ddiclient.core.api.MessageListener
 import de.psdev.slf4j.android.logger.AndroidLoggerAdapter
 import de.psdev.slf4j.android.logger.LogLevel
+import org.eclipse.hara.ddiclient.core.api.MessageListener
 
 /*
  * @author Daniele Sergio

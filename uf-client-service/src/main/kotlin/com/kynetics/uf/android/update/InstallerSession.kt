@@ -14,7 +14,7 @@ import android.content.pm.PackageInstaller.SessionParams
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.kynetics.updatefactory.ddiclient.core.api.Updater
+import org.eclipse.hara.ddiclient.core.api.Updater
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException

@@ -20,7 +20,7 @@ import com.kynetics.uf.android.update.UpdateConfirmationTimeoutProvider
 import com.kynetics.uf.android.update.application.ApkAnalyzer.getPackageFromApk
 import com.kynetics.uf.android.update.application.ApkAnalyzer.getVersionFromApk
 import com.kynetics.uf.android.update.application.ApkAnalyzer.verifySharedUserId
-import com.kynetics.updatefactory.ddiclient.core.api.Updater
+import org.eclipse.hara.ddiclient.core.api.Updater
 import java.io.File
 import java.util.concurrent.CountDownLatch
 

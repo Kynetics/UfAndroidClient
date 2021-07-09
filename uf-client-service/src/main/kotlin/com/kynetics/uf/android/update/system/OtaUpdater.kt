@@ -14,7 +14,7 @@ import android.util.Log
 import com.kynetics.uf.android.update.AndroidUpdater
 import com.kynetics.uf.android.update.CurrentUpdateState
 import com.kynetics.uf.android.update.SystemUpdateType
-import com.kynetics.updatefactory.ddiclient.core.api.Updater
+import org.eclipse.hara.ddiclient.core.api.Updater
 
 class OtaUpdater(context: Context) : AndroidUpdater(context) {
 

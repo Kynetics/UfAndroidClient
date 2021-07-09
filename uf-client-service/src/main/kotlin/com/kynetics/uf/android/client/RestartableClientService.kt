@@ -11,13 +11,13 @@ package com.kynetics.uf.android.client
 
 import android.util.Log
 import com.kynetics.uf.android.configuration.ConfigurationHandler
-import com.kynetics.updatefactory.ddiclient.core.api.*
+import org.eclipse.hara.ddiclient.core.api.*
 import kotlinx.coroutines.*
 
 class RestartableClientService constructor(
         private val client: UpdateFactoryClientWrapper,
         private val  deploymentPermitProvider: DeploymentPermitProvider,
-        listeners: List<MessageListener>): UpdateFactoryClient by client{
+        listeners: List<MessageListener>): HaraClient by client{
     private var currentState:MessageListener.Message.State? = null
     private val _listeners:List<MessageListener>
     private val context = newSingleThreadContext("UF restartable client service context")

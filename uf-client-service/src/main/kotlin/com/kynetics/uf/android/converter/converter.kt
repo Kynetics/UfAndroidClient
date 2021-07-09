@@ -10,7 +10,7 @@
 package com.kynetics.uf.android.converter
 
 import com.kynetics.uf.android.api.v1.UFServiceMessageV1
-import com.kynetics.updatefactory.ddiclient.core.api.MessageListener
+import org.eclipse.hara.ddiclient.core.api.MessageListener
 
 fun MessageListener.Message.State.Downloading.Artifact.toUFArtifact(): UFServiceMessageV1.State.Downloading.Artifact {
     return UFServiceMessageV1.State.Downloading.Artifact(name, size, md5)
